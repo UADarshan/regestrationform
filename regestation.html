@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      max-width: 400px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      color: #333;
+      background-color: #f5f5f5;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    button[type="submit"] {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Arial', sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+
+    .output-container {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f5f5f5;
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .output-container h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: #555;
+    }
+
+    .output-container p {
+      margin-bottom: 5px;
+    }
+
+    .emoji {
+      font-size: 18px;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2><span class="emoji">📝</span> Registration Form</h2>
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" required>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" required>
+      </div>
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <select id="gender" required>
+          <option value="">Select gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="skills">Skills Known:</label>
+        <input type="text" id="skills" required>
+      </div>
+      <div class="form-group">
+        <button type="submit"><span class="emoji">✅</span> Register</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="output-container" id="output"></div>
+
+  <script>
+    const form = document.getElementById("registrationForm");
+    const output = document.getElementById("output");
+    let registrationCount = 0;
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const gender = document.getElementById("gender").value;
+      const skills = document.getElementById("skills").value;
+
+      // Create a new registration entry
+      const entryContainer = document.createElement("div");
+      entryContainer.className = "entry-container";
+
+      const entryContent = `
+        <h3><span class="emoji">📄</span> Registration Details:</h3>
+        <p><strong><span class="emoji">👤</span> Name:</strong> ${name}</p>
+        <p><strong><span class="emoji">✉️</span> Email:</strong> ${email}</p>
+        <p><strong><span class="emoji">🔒</span> Password:</strong> ${password}</p>
+        <p><strong><span class="emoji">🔑</span> Confirm Password:</strong> ${confirmPassword}</p>
+        <p><strong><span class="emoji">🚻</span> Gender:</strong> ${gender}</p>
+        <p><strong><span class="emoji">🔧</span> Skills Known:</strong> ${skills}</p>
+      `;
+
+      entryContainer.innerHTML = entryContent;
+      
+      // Append the new entry to the output container
+      output.appendChild(entryContainer);
+      
+      // Increment the registration count
+      registrationCount++;
+
+      // Clear form fields after registration
+      form.reset();
+
+      // Scroll to the latest registration entry
+      entryContainer.scrollIntoView({ behavior: 'smooth' });
+
+      // If the maximum number of entries reached, disable the form
+      if (registrationCount === 4) {
+        form.classList.add("disabled");
+        const submitButton = form.querySelector("button[type='submit']");
+        submitButton.disabled = true;
+        submitButton.textContent = "Registration Closed";
+      }
+    });
+  </script>
+</body>
+</html>
